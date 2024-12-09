@@ -9,7 +9,7 @@ def main():
     '''
 
     application = QApplication([])
-    window = accounts()
+    window = Account()
     window.show()
     application.exec()
 

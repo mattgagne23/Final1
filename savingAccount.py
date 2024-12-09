@@ -9,11 +9,11 @@
 from PyQt6 import QtCore, QtGui, QtWidgets
 
 
-class Ui_checkingAccount(object):
-    def setupUi(self, checkingAccount):
-        checkingAccount.setObjectName("checkingAccount")
-        checkingAccount.resize(375, 450)
-        self.centralwidget = QtWidgets.QWidget(parent=checkingAccount)
+class Ui_savingsAccount(object):
+    def setupUi(self, savingsAccount):
+        savingsAccount.setObjectName("savingsAccount")
+        savingsAccount.resize(375, 450)
+        self.centralwidget = QtWidgets.QWidget(parent=savingsAccount)
         self.centralwidget.setObjectName("centralwidget")
         self.welcome_nameLabel = QtWidgets.QLabel(parent=self.centralwidget)
         self.welcome_nameLabel.setGeometry(QtCore.QRect(110, 20, 161, 41))
@@ -54,39 +54,39 @@ class Ui_checkingAccount(object):
         self.pushButton_5 = QtWidgets.QPushButton(parent=self.centralwidget)
         self.pushButton_5.setGeometry(QtCore.QRect(240, 360, 101, 21))
         self.pushButton_5.setObjectName("pushButton_5")
-        checkingAccount.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(parent=checkingAccount)
+        savingsAccount.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(parent=savingsAccount)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 375, 18))
         self.menubar.setObjectName("menubar")
-        checkingAccount.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(parent=checkingAccount)
+        savingsAccount.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(parent=savingsAccount)
         self.statusbar.setObjectName("statusbar")
-        checkingAccount.setStatusBar(self.statusbar)
+        savingsAccount.setStatusBar(self.statusbar)
 
-        self.retranslateUi(checkingAccount)
-        QtCore.QMetaObject.connectSlotsByName(checkingAccount)
+        self.retranslateUi(savingsAccount)
+        QtCore.QMetaObject.connectSlotsByName(savingsAccount)
 
-    def retranslateUi(self, checkingAccount):
+    def retranslateUi(self, savingsAccount):
         _translate = QtCore.QCoreApplication.translate
-        checkingAccount.setWindowTitle(_translate("checkingAccount", "MainWindow"))
-        self.welcome_nameLabel.setText(_translate("checkingAccount", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Welcome, Placeholder</span></p></body></html>"))
-        self.balance_Label.setText(_translate("checkingAccount", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Your </span><span style=\" font-size:12pt; font-weight:600;\">savings</span><span style=\" font-size:12pt;\"> account balance is: </span></p></body></html>"))
-        self.last_editLabel.setText(_translate("checkingAccount", "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">Last access: X/XX/XX</span></p></body></html>"))
-        self.action_requestLabel.setText(_translate("checkingAccount", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">What would you like to do?</span></p></body></html>"))
-        self.pushButton.setText(_translate("checkingAccount", "Deposit"))
-        self.pushButton_2.setText(_translate("checkingAccount", "Withdrawal"))
-        self.label.setText(_translate("checkingAccount", "<html><head/><body><p><span style=\" font-size:10pt;\">Deposit Amount:</span></p></body></html>"))
-        self.label_2.setText(_translate("checkingAccount", "<html><head/><body><p><span style=\" font-size:10pt;\">Withdrawal Amount:</span></p></body></html>"))
-        self.pushButton_3.setText(_translate("checkingAccount", "Savings Account Statement"))
-        self.pushButton_4.setText(_translate("checkingAccount", "Checking Account"))
-        self.pushButton_5.setText(_translate("checkingAccount", "Return to Login"))
+        savingsAccount.setWindowTitle(_translate("savingsAccount", "MainWindow"))
+        self.welcome_nameLabel.setText(_translate("savingsAccount", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Welcome, Placeholder</span></p></body></html>"))
+        self.balance_Label.setText(_translate("savingsAccount", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">Your </span><span style=\" font-size:12pt; font-weight:600;\">savings</span><span style=\" font-size:12pt;\"> account balance is: </span></p></body></html>"))
+        self.last_editLabel.setText(_translate("savingsAccount", "<html><head/><body><p align=\"center\"><span style=\" font-size:10pt;\">Last access: X/XX/XX</span></p></body></html>"))
+        self.action_requestLabel.setText(_translate("savingsAccount", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt;\">What would you like to do?</span></p></body></html>"))
+        self.pushButton.setText(_translate("savingsAccount", "Deposit"))
+        self.pushButton_2.setText(_translate("savingsAccount", "Withdrawal"))
+        self.label.setText(_translate("savingsAccount", "<html><head/><body><p><span style=\" font-size:10pt;\">Deposit Amount:</span></p></body></html>"))
+        self.label_2.setText(_translate("savingsAccount", "<html><head/><body><p><span style=\" font-size:10pt;\">Withdrawal Amount:</span></p></body></html>"))
+        self.pushButton_3.setText(_translate("savingsAccount", "Savings Account Statement"))
+        self.pushButton_4.setText(_translate("savingsAccount", "Checking Account"))
+        self.pushButton_5.setText(_translate("savingsAccount", "Return to Login"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    checkingAccount = QtWidgets.QMainWindow()
-    ui = Ui_checkingAccount()
-    ui.setupUi(checkingAccount)
-    checkingAccount.show()
+    savingsAccount = QtWidgets.QMainWindow()
+    ui = Ui_savingsAccount()
+    ui.setupUi(savingsAccount)
+    savingsAccount.show()
     sys.exit(app.exec())

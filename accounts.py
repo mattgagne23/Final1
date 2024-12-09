@@ -1,14 +1,20 @@
+from multiprocessing.managers import Value
+
 from PyQt6.QtWidgets import *
 from welcomeWindow import *
 from checkingAccount import *
 from savingAccount import *
+import csv
+import os.path
 
-class Account(QMainWindow, Ui_WelcomeWindow):
+class Account(QMainWindow, Ui_WelcomeWindow, Ui_checkingAccount, Ui_savingsAccount):
     VERIFIED = False #Will be used to check for login verification when accessing functions - class or function variable?
 
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+        self.register_button.clicked.connect(lambda : self.register_button_clicked())
+        self.login_button.clicked.connect(lambda : self.login_button_clicked())
 
         '''
         This function is used to initialize customer variables
@@ -17,28 +23,120 @@ class Account(QMainWindow, Ui_WelcomeWindow):
         :param self.__account_balance: adjustable balance variable
         :param self.set_balance(self.__account_balance: this will set the balance object as the initial 0
         '''
-        self.__account_name = name
+        #self.__account_name = name
         #self.__account_ID = special_Pin
-        self.__account_balance = balance
-        self.set_balance(self.__account_balance)
+        #self.__account_balance = balance
+        #self.set_balance(self.__account_balance)
 
-    def create_login(self, name, pin):
+    def register_button_clicked(self):
         '''
         Used with the register button to create record of account and initialize object. Will create, write,
         or read to global csv customer data file. Once added, name should be verified in varify_login function when logging in.
         :param self:
-        :param name:
-        :param pin:
+        :param already_registered: Used to show if user is already registered
+        :param name: Name entered
+        :param PIN: PIN entered
+        :param login_data: Used to store list of Name, PIN
+        :param path: Used to store file path
         :return:
         '''
+        already_registered = False
+        path = './login_list.csv'
+        name = self.name_Edit.text().strip()
+        PIN = self.PIN_Edit.text().strip()
 
-    def verify_login(self, name, pin):
+        try:
+            if name == '':
+                raise ValueError
+            if PIN == '':
+                raise ValueError
+            if len(PIN) != 4:
+                raise ValueError
+        except ValueError:
+            self.register_error_label.setText('Enter a valid Name and PIN')
+        else:
+
+            login_data = [name, PIN]
+
+            if os.path.isfile(path) == False:
+                with open('login_list.csv', 'w', newline='') as csvfile:
+                    csv_writer = csv.writer(csvfile)
+                    csv_writer.writerow(['Name', 'PIN'])
+
+            with open('login_list.csv', 'r', newline='') as csvfile:
+                csv_reader = csv.reader(csvfile)
+                for row in csv_reader:
+                    if row == login_data:
+                        self.register_error_label.setText('Account already exists')
+                        already_registered = True
+
+            if already_registered == False:
+                with open('login_list.csv', 'a', newline='') as csvfile:
+                    csv_writer = csv.writer(csvfile)
+                    csv_writer.writerow(login_data)
+                    self.register_error_label.setText('Account has been created!')
+                with open(f'checking_{name}_{PIN}.csv', 'w', newline='') as csvfile:
+                    csv_writer = csv.writer(csvfile)
+                    csv_writer.writerow(['CHECKING', name, PIN])
+                with open(f'savings_{name}_{PIN}.csv', 'w', newline='') as csvfile:
+                    csv_writer = csv.writer(csvfile)
+                    csv_writer.writerow(['SAVINGS', name, PIN])
+
+            self.name_Edit.clear()
+            self.PIN_Edit.clear()
+            self.login_error_label.setText('')
+            self.account_selection_label.setText('')
+
+    def login_button_clicked(self):
         '''
         This function will verify the name and PIN combination entered against a file for validation.
         Should return True or False for validation. Will read a file for verification.
         '''
+        already_registered = False
+        path = './login_list.csv'
+        name = self.name_Edit.text().strip()
+        PIN = self.PIN_Edit.text().strip()
 
-    def edit_account_file(self, name, pin):
+        if self.checking_Radio.isChecked():
+            account = 'checking'
+        elif self.savings_Radio.isChecked():
+            account = 'savings'
+        else:
+            self.account_selection_label.setText('You must choose an account!')
+
+        try:
+            if name == '':
+                raise ValueError
+            if PIN == '':
+                raise ValueError
+            if len(PIN) != 4:
+                raise ValueError
+        except ValueError:
+            self.register_error_label.setText('Enter a valid Name and PIN')
+        else:
+
+            login_data = [name, PIN]
+
+            if os.path.isfile(path) == False:
+                self.login_error_label.setText('No registered users!')
+
+            else:
+                with open('login_list.csv', 'r', newline='') as csvfile:
+                    csv_reader = csv.reader(csvfile)
+                    for row in csv_reader:
+                        if row == login_data:
+                            ###LOGIC TO CHANGE TO CHECKING OR SAVINGS WINDOW BASED ON RADIO BUTTON
+                            self.login_error_label.setText('Account already exists')
+                            already_registered = True
+
+                if already_registered == False:
+                    self.login_error_label.setText('You must register to create a bank account!')
+
+            self.name_Edit.clear()
+            self.PIN_Edit.clear()
+            self.register_error_label.setText('')
+
+    def edit_account_file(self):
         '''
         Used to either create, write, or read transaction data to applicable account. Maybe have an option to clear.
         If an account file does not exist for a customer, create csv file with format name_pin to locate upon re-logging
