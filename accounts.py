@@ -1,14 +1,11 @@
 from multiprocessing.managers import Value
 
 from PyQt6.QtWidgets import *
-from welcomeWindow import *
-from checkingAccount import *
-from savingAccount import *
+from mainWindow import *
 import csv
 import os.path
 
-class Account(QMainWindow, Ui_WelcomeWindow, Ui_checkingAccount, Ui_savingsAccount):
-    VERIFIED = False #Will be used to check for login verification when accessing functions - class or function variable?
+class Account(QMainWindow, Ui_WelcomeWindow):
 
     def __init__(self):
         super().__init__()
@@ -125,9 +122,15 @@ class Account(QMainWindow, Ui_WelcomeWindow, Ui_checkingAccount, Ui_savingsAccou
                     csv_reader = csv.reader(csvfile)
                     for row in csv_reader:
                         if row == login_data:
-                            ###LOGIC TO CHANGE TO CHECKING OR SAVINGS WINDOW BASED ON RADIO BUTTON
-                            self.login_error_label.setText('Account already exists')
+                            #LOGIC TO CHANGE TO CHECKING OR SAVINGS WINDOW BASED ON RADIO BUTTON
+                            #self.login_error_label.setText('Account already exists')
                             already_registered = True
+
+                            if already_registered == True:
+                                if account == 'checking':
+
+                                elif account == 'savings':
+                                    open_savings_window()
 
                 if already_registered == False:
                     self.login_error_label.setText('You must register to create a bank account!')

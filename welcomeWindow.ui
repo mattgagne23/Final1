@@ -26,24 +26,11 @@
       <x>100</x>
       <y>20</y>
       <width>161</width>
-      <height>111</height>
+      <height>91</height>
      </rect>
     </property>
     <property name="text">
      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;Welcome&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;to&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:14pt;&quot;&gt;World's Best Bank&lt;/span&gt;&lt;/p&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="login_Label">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>140</y>
-      <width>331</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; text-decoration: underline;&quot;&gt;Login with your name and four digit PIN&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
     </property>
    </widget>
    <widget class="QLabel" name="name_Label">
@@ -227,6 +214,51 @@
      <string/>
     </property>
    </widget>
+   <widget class="QStackedWidget" name="stackedWidget">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>110</y>
+      <width>361</width>
+      <height>331</height>
+     </rect>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="welcome"/>
+    <widget class="QWidget" name="checking"/>
+    <widget class="QWidget" name="savings"/>
+   </widget>
+   <widget class="QLabel" name="login_Label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>120</y>
+      <width>331</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:12pt; font-weight:600; text-decoration: underline;&quot;&gt;Login with your name and four digit PIN&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <zorder>welcome_Label</zorder>
+   <zorder>stackedWidget</zorder>
+   <zorder>PIN_Edit</zorder>
+   <zorder>PIN_Label</zorder>
+   <zorder>accountType_Label</zorder>
+   <zorder>register_Label</zorder>
+   <zorder>login_Label</zorder>
+   <zorder>register_error_label</zorder>
+   <zorder>login_error_label</zorder>
+   <zorder>register_button</zorder>
+   <zorder>name_Edit</zorder>
+   <zorder>checking_Radio</zorder>
+   <zorder>name_Label</zorder>
+   <zorder>savings_Radio</zorder>
+   <zorder>account_selection_label</zorder>
+   <zorder>login_button</zorder>
   </widget>
  </widget>
  <resources>
