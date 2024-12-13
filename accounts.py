@@ -7,11 +7,30 @@ import os.path
 
 class Account(QMainWindow, Ui_WelcomeWindow):
 
-    def __init__(self):
+    def __init__(self, name='', pin=''):
+        '''
+        Function to initialize window and first stackable widget page. Also houses
+        button clicking relationships.
+        '''
         super().__init__()
         self.setupUi(self)
+
+        self.__name = name
+        self.__pin = pin
+
         self.register_button.clicked.connect(lambda : self.register_button_clicked())
         self.login_button.clicked.connect(lambda : self.login_button_clicked())
+        self.deposit_Button.clicked.connect(lambda: self.deposit())
+        self.withdrawal_Button.clicked.connect(lambda: self.withdraw())
+        self.deposit_Button_2.clicked.connect(lambda: self.deposit_savings()) #savings deposit
+        self.withdrawal_Button_2.clicked.connect(lambda: self.withdraw_savings()) #savings withdrawal
+
+        self.savings_pageButton.clicked.connect(lambda : self.show_savings())
+        self.checking_pageButton.clicked.connect(lambda : self.show_checking())
+        self.login_pageButton.clicked.connect(lambda : self.show_login())
+        self.login_pageButton_2.clicked.connect(lambda : self.show_login()) #savings login return
+
+        self.stackedWidget.setCurrentWidget(self.welcome)
 
         '''
         This function is used to initialize customer variables
@@ -20,14 +39,32 @@ class Account(QMainWindow, Ui_WelcomeWindow):
         :param self.__account_balance: adjustable balance variable
         :param self.set_balance(self.__account_balance: this will set the balance object as the initial 0
         '''
-        #self.__account_name = name
-        #self.__account_ID = special_Pin
-        #self.__account_balance = balance
-        #self.set_balance(self.__account_balance)
+
+    def show_checking(self):
+        '''
+        This function is used to change the stackable widget page to checking page and grabs current balance.
+        '''
+        balance = self.get_checking_balance()
+        self.stackedWidget.setCurrentWidget(self.checking)
+        self.balance_Label.setText(f'Your checking balance is {balance:.2f}')
+
+    def show_savings(self):
+        '''
+        This function is used to change the stackable widget page to savings page and grabs current balance.
+        '''
+        balance = self.get_savings_balance()
+        self.stackedWidget.setCurrentWidget(self.savings)
+        self.balance_Label_2.setText(f'Your savings balance is {balance:.2f}')
+
+    def show_login(self):
+        '''
+        This function is used to change the stackable widget page to login screen.
+        '''
+        self.stackedWidget.setCurrentWidget(self.welcome)
 
     def register_button_clicked(self):
         '''
-        Used with the register button to create record of account and initialize object. Will create, write,
+        Used with the register button to create record of account. Will create, write,
         or read to global csv customer data file. Once added, name should be verified in varify_login function when logging in.
         :param self:
         :param already_registered: Used to show if user is already registered
@@ -39,21 +76,21 @@ class Account(QMainWindow, Ui_WelcomeWindow):
         '''
         already_registered = False
         path = './login_list.csv'
-        name = self.name_Edit.text().strip()
-        PIN = self.PIN_Edit.text().strip()
+        self.__name = self.name_Edit.text().strip()
+        self.__pin = self.PIN_Edit.text().strip()
 
         try:
-            if name == '':
+            if self.__name == '':
                 raise ValueError
-            if PIN == '':
+            if self.__pin == '':
                 raise ValueError
-            if len(PIN) != 4:
+            if len(self.__pin) != 4:
                 raise ValueError
         except ValueError:
             self.register_error_label.setText('Enter a valid Name and PIN')
         else:
 
-            login_data = [name, PIN]
+            login_data = [self.__name, self.__pin]
 
             if os.path.isfile(path) == False:
                 with open('login_list.csv', 'w', newline='') as csvfile:
@@ -72,12 +109,10 @@ class Account(QMainWindow, Ui_WelcomeWindow):
                     csv_writer = csv.writer(csvfile)
                     csv_writer.writerow(login_data)
                     self.register_error_label.setText('Account has been created!')
-                with open(f'checking_{name}_{PIN}.csv', 'w', newline='') as csvfile:
-                    csv_writer = csv.writer(csvfile)
-                    csv_writer.writerow(['CHECKING', name, PIN])
-                with open(f'savings_{name}_{PIN}.csv', 'w', newline='') as csvfile:
-                    csv_writer = csv.writer(csvfile)
-                    csv_writer.writerow(['SAVINGS', name, PIN])
+                with open(f'checking_{self.__name}_{self.__pin}.csv', 'w', newline='') as csvfile:
+                    pass
+                with open(f'savings_{self.__name}_{self.__pin}.csv', 'w', newline='') as csvfile:
+                    pass
 
             self.name_Edit.clear()
             self.PIN_Edit.clear()
@@ -91,8 +126,8 @@ class Account(QMainWindow, Ui_WelcomeWindow):
         '''
         already_registered = False
         path = './login_list.csv'
-        name = self.name_Edit.text().strip()
-        PIN = self.PIN_Edit.text().strip()
+        self.__name = self.name_Edit.text().strip()
+        self.__pin = self.PIN_Edit.text().strip()
 
         if self.checking_Radio.isChecked():
             account = 'checking'
@@ -102,17 +137,17 @@ class Account(QMainWindow, Ui_WelcomeWindow):
             self.account_selection_label.setText('You must choose an account!')
 
         try:
-            if name == '':
+            if self.__name == '':
                 raise ValueError
-            if PIN == '':
+            if self.__pin == '':
                 raise ValueError
-            if len(PIN) != 4:
+            if len(self.__pin) != 4:
                 raise ValueError
         except ValueError:
             self.register_error_label.setText('Enter a valid Name and PIN')
         else:
 
-            login_data = [name, PIN]
+            login_data = [self.__name, self.__pin]
 
             if os.path.isfile(path) == False:
                 self.login_error_label.setText('No registered users!')
@@ -126,11 +161,13 @@ class Account(QMainWindow, Ui_WelcomeWindow):
                             #self.login_error_label.setText('Account already exists')
                             already_registered = True
 
-                            if already_registered == True:
-                                if account == 'checking':
-
-                                elif account == 'savings':
-                                    open_savings_window()
+                if already_registered == True:
+                    if self.checking_Radio.isChecked():
+                        self.show_checking()
+                    elif self.savings_Radio.isChecked():
+                        self.show_savings()
+                    else:
+                        self.account_selection_label.setText('You must choose an account!')
 
                 if already_registered == False:
                     self.login_error_label.setText('You must register to create a bank account!')
@@ -139,133 +176,157 @@ class Account(QMainWindow, Ui_WelcomeWindow):
             self.PIN_Edit.clear()
             self.register_error_label.setText('')
 
-    def edit_account_file(self):
+    def get_checking_balance(self):
         '''
-        Used to either create, write, or read transaction data to applicable account. Maybe have an option to clear.
-        If an account file does not exist for a customer, create csv file with format name_pin to locate upon re-logging
-        in.
-        :param self:
-        :param name:
-        :param pin:
-        :return:
+        This function has the purpose of reading through the applicable csv file
+        and returning the balance total.
+        :return: Returns the balance calculated from the rows in csv file.
         '''
+        balance = 0
+        with open(f'checking_{self.__name}_{self.__pin}.csv', 'r', newline='') as csvfile:
+            csv_reader = csv.reader(csvfile)
+            for row in csv_reader:
+                for value in row:
+                    balance += float(value)
 
-    def deposit(self, amount):
+        return balance
+
+    def get_savings_balance(self):
+        '''
+        This function has the purpose of reading through the applicable savings csv file and returning the balance total.
+        :return: Returns the balance calculated from the rows in csv file.
+        '''
+        balance = 0
+        with open(f'savings_{self.__name}_{self.__pin}.csv', 'r', newline='') as csvfile:
+            csv_reader = csv.reader(csvfile)
+            for row in csv_reader:
+                for value in row:
+                    balance += float(value)
+
+            return balance
+
+    def deposit(self):
         '''
         This function is used to add a valid amount to a balance.
         This would need to be recorded in the account transaction file as a credit, and needs to work with balance
         variable in file.
-        :param self.__account_balance: This is the variable funds would be added to
         :param amount: Amount to be added to account balance that must be greater than 0
-        :return:
         '''
-        if amount <= 0:
-            return False
-        else:
-            self.__account_balance += amount
-            return True
 
-    def withdraw(self, amount):
+        try:
+            amount = float(self.deposit_inputEdit.text().strip())
+            if amount == '':
+                raise TypeError
+            if float(amount) <= 0:
+                raise TypeError
+        except ValueError:
+            self.deposit_error.setText('Values must be numeric')
+        except TypeError:
+            self.deposit_error.setText('Deposit must be greater than 0')
+        else:
+            amount = (f'{amount:.2f}')
+            with open(f'checking_{self.__name}_{self.__pin}.csv', 'a', newline='') as csvfile:
+                csv_writer = csv.writer(csvfile)
+                csv_writer.writerow([amount])
+
+            balance = self.get_checking_balance()
+
+            self.balance_Label.setText(f'Your checking account balance is {balance:.2f}')
+
+            self.deposit_inputEdit.clear()
+
+    def withdraw(self):
         '''
         Similar function to deposit, will reduce balance by a valid amount. Will record in account file. Needs to be
         recorded as a debit in transaction file, needs to use balance stored in file.
         Amount cannot be less than 1 or more than entire balance.
+        :param initial_balance: used to check amount against balance
         '''
-        if (amount <= 0) or (amount > self.__account_balance):
-            return False
+        initial_balance = self.get_checking_balance()
+
+        try:
+            amount = float(self.withdrawal_inputEdit.text().strip())
+            if amount == '':
+                raise TypeError
+            if float(amount) <= 0:
+                raise TypeError
+            if float(amount) > initial_balance:
+                raise TypeError
+        except ValueError:
+            self.withdrawal_error.setText('Values must be numeric')
+        except TypeError:
+            self.withdrawal_error.setText('Please enter valid withdrawal amount')
         else:
-            self.__account_balance -= amount
-            return True
+            amount = (f'-{amount:.2f}')
+            with open(f'checking_{self.__name}_{self.__pin}.csv', 'a', newline='') as csvfile:
+                csv_writer = csv.writer(csvfile)
+                csv_writer.writerow([amount])
 
-    def get_balance(self):
-        '''
-        Used to retrieve balance amount from file. Might be tricky but should be able to save final balance to top row?
-        :param self:
-        :return:
-        '''
-        return self.__account_balance
+            balance = self.get_checking_balance()
 
-    def get_name(self):
-        '''
-        Return account name currently being used. Will be used for account screens after login.
-        :param self:
-        :return:
-        '''
-        return self.__account_name
+            self.balance_Label.setText(f'Your checking account balance is {balance:.2f}')
 
-    def set_balance(self, value):
+            self.withdrawal_inputEdit.clear()
+
+    def deposit_savings(self):
         '''
-        Would be used in conjunction with withdraw and deposit. Potentially have the account file balance updated
-        here.
-        :param self:
-        :param value:
-        :return:
+        This function is used to deposit funds into savings account.
+        :param amount: Amount being deposited that must be greater than 0 and must be numeric
         '''
-        if value < 0:
-            self.__account_balance = 0
+
+        rate = 0.02
+
+        try:
+            amount = float(self.deposit_inputEdit_2.text().strip())
+            if amount == '':
+                raise TypeError
+            if float(amount) <= 0:
+                raise TypeError
+        except ValueError:
+            self.deposit_error_2.setText('Values must be numeric')
+        except TypeError:
+            self.deposit_error_2.setText('Deposit must be greater than 0')
         else:
-            self.__account_balance = value
+            interest = amount * rate
+            amount_with_interest = interest + amount
+            amount_with_interest = (f'{amount_with_interest:.2f}')
+            with open(f'savings_{self.__name}_{self.__pin}.csv', 'a', newline='') as csvfile:
+                csv_writer = csv.writer(csvfile)
+                csv_writer.writerow([amount_with_interest])
 
-    def set_name(self, value):
+            balance = self.get_savings_balance()
+
+            self.balance_Label_2.setText(f'Your checking account balance is {balance:.2f}')
+
+            self.deposit_inputEdit_2.clear()
+
+    def withdraw_savings(self):
         '''
-        Not sure if this will be used. Might be needed during global variable process but might be consolidated
-        with create login.
-        :param self:
-        :param value:
-        :return:
+        This is a function to withdraw funds from the savings account.
+        :param amount: The amount entered to be withdrawn. This cannot be less than 0 or greater than account balance.
         '''
-        self.__account_name = value
+        initial_balance = self.get_savings_balance()
 
-    def __str__(self):
-        '''
-        Need to change, but should be able to print things like:
-        "Welcome, {name}!"
-        "Your {account_type} balance is: {account balance}"
-        :param self:
-        :return:
-        '''
-        return f'Account name = {self.get_name()}, Account balance = {self.get_balance():.2f}'
-
-class SavingAccount(Account):
-    '''
-    This class is to use inheritance and create another object for a savings account that has calculated interest.
-    This will be adjusted accordingly with functions being changed above.
-    '''
-    minimum = 100
-    rate = 0.02
-
-    def __init__(self, name):
-        super().__init__(name, SavingAccount.minimum)
-        self.__deposit_count = 0
-
-    def apply_interest(self):
-        if self.__deposit_count % 5 == 0:
-            self.set_balance(self.get_balance() + (self.get_balance() * SavingAccount.rate))
-
-    def deposit(self, amount):
-        if amount <= 0:
-            return False
+        try:
+            amount = float(self.withdrawal_inputEdit_2.text().strip())
+            if amount == '':
+                raise TypeError
+            if float(amount) <= 0:
+                raise TypeError
+            if float(amount) > initial_balance:
+                raise TypeError
+        except ValueError:
+            self.withdrawal_error_2.setText('Values must be numeric')
+        except TypeError:
+            self.withdrawal_error_2.setText('Please enter valid withdrawal amount')
         else:
-            self.set_balance(self.get_balance() + amount)
-            self.__deposit_count += 1
-            self.apply_interest()
-            return True
+            amount = (f'-{amount:.2f}')
+            with open(f'savings_{self.__name}_{self.__pin}.csv', 'a', newline='') as csvfile:
+                csv_writer = csv.writer(csvfile)
+                csv_writer.writerow([amount])
 
-    def withdraw(self, amount):
-        if (amount <= 0) or ((self.get_balance() - amount) < SavingAccount.minimum):
-            return False
-        else:
-            self.set_balance(self.get_balance() - amount)
-            return True
+            balance = self.get_savings_balance()
 
-    def set_balance(self, value):
-        if value < SavingAccount.minimum:
-            super().set_balance(SavingAccount.minimum)
-        else:
-            super().set_balance(value)
+            self.balance_Label_2.setText(f'Your checking account balance is {balance:.2f}')
 
-    def set_name(self, value):
-        super().set_name(value)
-
-    def __str__(self):
-        return f'SAVING ACCOUNT: {super().__str__()}'
+            self.withdrawal_inputEdit_2.clear()

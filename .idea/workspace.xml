@@ -7,7 +7,11 @@
     <list default="true" id="629a91c3-fba6-4410-abb8-9673ad5eedf8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/accounts.py" beforeDir="false" afterPath="$PROJECT_DIR$/accounts.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/welcomeWindow.ui" beforeDir="false" afterPath="$PROJECT_DIR$/welcomeWindow.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/checking_Matt_2314.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/login_list.csv" beforeDir="false" afterPath="$PROJECT_DIR$/login_list.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainWindow.py" beforeDir="false" afterPath="$PROJECT_DIR$/mainWindow.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/mainWindow.ui" beforeDir="false" afterPath="$PROJECT_DIR$/mainWindow.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/savings_Matt_2314.csv" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
