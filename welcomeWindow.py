@@ -1,4 +1,4 @@
- # Form implementation generated from reading ui file 'welcomeWindow.ui'
+# Form implementation generated from reading ui file 'welcomeWindow.ui'
 #
 # Created by: PyQt6 UI code generator 6.7.1
 #
@@ -12,6 +12,7 @@ from PyQt6 import QtCore, QtGui, QtWidgets
 class Ui_WelcomeWindow(object):
     def setupUi(self, WelcomeWindow):
         WelcomeWindow.setObjectName("WelcomeWindow")
+        WelcomeWindow.setEnabled(True)
         WelcomeWindow.resize(375, 450)
         WelcomeWindow.setStyleSheet("background-color: rgb(126, 132, 107);")
         self.centralwidget = QtWidgets.QWidget(parent=WelcomeWindow)
@@ -31,10 +32,10 @@ class Ui_WelcomeWindow(object):
         self.register_Label = QtWidgets.QLabel(parent=self.centralwidget)
         self.register_Label.setGeometry(QtCore.QRect(30, 350, 311, 21))
         self.register_Label.setObjectName("register_Label")
-        self.login_Push = QtWidgets.QPushButton(parent=self.centralwidget)
-        self.login_Push.setGeometry(QtCore.QRect(140, 300, 81, 21))
-        self.login_Push.setStyleSheet("background-color: rgb(89, 78, 54);")
-        self.login_Push.setObjectName("login_Push")
+        self.login_button = QtWidgets.QPushButton(parent=self.centralwidget)
+        self.login_button.setGeometry(QtCore.QRect(140, 300, 81, 21))
+        self.login_button.setStyleSheet("background-color: rgb(89, 78, 54);")
+        self.login_button.setObjectName("login_button")
         self.name_Edit = QtWidgets.QLineEdit(parent=self.centralwidget)
         self.name_Edit.setGeometry(QtCore.QRect(160, 180, 113, 20))
         self.name_Edit.setStyleSheet("background-color: rgb(208, 221, 215);")
@@ -49,13 +50,27 @@ class Ui_WelcomeWindow(object):
         self.checking_Radio = QtWidgets.QRadioButton(parent=self.centralwidget)
         self.checking_Radio.setGeometry(QtCore.QRect(170, 260, 71, 21))
         self.checking_Radio.setObjectName("checking_Radio")
+        self.account_radio_group = QtWidgets.QButtonGroup(WelcomeWindow)
+        self.account_radio_group.setObjectName("account_radio_group")
+        self.account_radio_group.addButton(self.checking_Radio)
         self.savings_Radio = QtWidgets.QRadioButton(parent=self.centralwidget)
         self.savings_Radio.setGeometry(QtCore.QRect(250, 260, 81, 21))
         self.savings_Radio.setObjectName("savings_Radio")
-        self.register_Push = QtWidgets.QPushButton(parent=self.centralwidget)
-        self.register_Push.setGeometry(QtCore.QRect(140, 390, 81, 21))
-        self.register_Push.setStyleSheet("background-color: rgb(89, 78, 54);")
-        self.register_Push.setObjectName("register_Push")
+        self.account_radio_group.addButton(self.savings_Radio)
+        self.register_button = QtWidgets.QPushButton(parent=self.centralwidget)
+        self.register_button.setGeometry(QtCore.QRect(140, 390, 81, 21))
+        self.register_button.setStyleSheet("background-color: rgb(89, 78, 54);")
+        self.register_button.setObjectName("register_button")
+        self.login_error_label = QtWidgets.QLabel(parent=self.centralwidget)
+        self.login_error_label.setGeometry(QtCore.QRect(120, 330, 231, 20))
+        self.login_error_label.setObjectName("login_error_label")
+        self.register_error_label = QtWidgets.QLabel(parent=self.centralwidget)
+        self.register_error_label.setGeometry(QtCore.QRect(120, 420, 191, 16))
+        self.register_error_label.setObjectName("register_error_label")
+        self.account_selection_label = QtWidgets.QLabel(parent=self.centralwidget)
+        self.account_selection_label.setGeometry(QtCore.QRect(120, 280, 171, 20))
+        self.account_selection_label.setText("")
+        self.account_selection_label.setObjectName("account_selection_label")
         WelcomeWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(WelcomeWindow)
@@ -69,11 +84,13 @@ class Ui_WelcomeWindow(object):
         self.name_Label.setText(_translate("WelcomeWindow", "<html><head/><body><p><span style=\" font-size:12pt;\">Name:</span></p></body></html>"))
         self.PIN_Label.setText(_translate("WelcomeWindow", "<html><head/><body><p><span style=\" font-size:12pt;\">PIN:</span></p></body></html>"))
         self.register_Label.setText(_translate("WelcomeWindow", "<html><head/><body><p align=\"center\"><span style=\" font-size:12pt; font-weight:600; text-decoration: underline;\">Or, Register To Create an Account</span></p></body></html>"))
-        self.login_Push.setText(_translate("WelcomeWindow", "Login"))
+        self.login_button.setText(_translate("WelcomeWindow", "Login"))
         self.accountType_Label.setText(_translate("WelcomeWindow", "<html><head/><body><p><span style=\" font-size:12pt;\">Account Type:</span></p></body></html>"))
         self.checking_Radio.setText(_translate("WelcomeWindow", "Checking"))
         self.savings_Radio.setText(_translate("WelcomeWindow", "Savings"))
-        self.register_Push.setText(_translate("WelcomeWindow", "Register"))
+        self.register_button.setText(_translate("WelcomeWindow", "Register"))
+        self.login_error_label.setText(_translate("WelcomeWindow", "<html><head/><body><p align=\"center\"><br/></p></body></html>"))
+        self.register_error_label.setText(_translate("WelcomeWindow", "<html><head/><body><p align=\"center\"><br/></p></body></html>"))
 
 
 if __name__ == "__main__":
